@@ -16,5 +16,7 @@ class Graph:
             stack.extend(graph[vertex] - visited)
     	return visited
 
+if __name__ == "__main__":
+	
     
 

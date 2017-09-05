@@ -14,11 +14,11 @@ def NQueen(n, board, i, j, found):
 
 def valid(board, x, y):
 	for i in range(len(board)):
-		if board[i][y] != 0:
+		if board[x][i] != 0:
 			return False
 
 	for i in range(len(board)):
-		if board[x][j] != 0:
+		if board[i][y] != 0:
 			return False
 
 	if not isSafe(board, x, y):
@@ -55,20 +55,26 @@ def isSafe(board, x, y):
 			return False
 		i -= 1
 		j += 1 
-
+	return True
 
 def revertMove(board, x, y):
 	i, j = x, y
 	while i >= 0:
 		while j >= 0:
-			if board[i][j] == 1:
+			if board[i][j] != 0:
 				board[i][j] = 0
 				return i, j
 			j -= 1
 		i -= 1
+	return i, j
 
+def printBoard(board):
+	for i in len(board):
+		for j in range(board):
+			print(board, sep = " ")
+		print()
 
 if __name__ == "__main__":
 	n = int(input())
-	board = [["-" for i in range(n)] for j in range(n)]
+	board = [[0 for i in range(n)] for j in range(n)]
 	NQueen(n, board, 0, 0, False)

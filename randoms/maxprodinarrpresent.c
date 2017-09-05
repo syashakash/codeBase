@@ -8,7 +8,8 @@ void swap(int *a, int *b)
 	*b = *a - *b;
 	
 	*a = *a - *b;
-	
+	// *a = (*a + *b) - (*b = *a);
+	// *a ^= *b ^= *a ^= *b;
 }
 
 int partition(int a[], int l, int h)
