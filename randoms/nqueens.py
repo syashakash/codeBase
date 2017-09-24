@@ -1,80 +1,60 @@
-def NQueen(n, board, i, j, found):
-	if not found:
-		if valid(board, i, j):
-			board[i][j] = 1
-			if i == n - 1:
-				found = True
-				printBoard(board)
-			NQueen(n, board, i + 1, 0, found)
-		else:
-			while j >= n - 1:
-				i, j = revertMove(board, i, j);
-			NQueen(n, board, i, j + 1, False)
-
-
-def valid(board, x, y):
-	for i in range(len(board)):
-		if board[x][i] != 0:
-			return False
-
-	for i in range(len(board)):
-		if board[i][y] != 0:
-			return False
-
-	if not isSafe(board, x, y):
-		return False
-	return True
-
-
+solution = 1
 def isSafe(board, x, y):
-	i, j = x, y
-	n = len(board)
-	while i >= 0 and j >= 0 and i < n and j < n:
-		if board[i][j] != 0:
+	for i in range(y):
+		if board[x][i] == 'Q':
 			return False
-		i += 1
-		j += 1
-
 	i, j = x, y
-	while i >= 0 and j >= 0 and i < n and j < n:
-		if board[i][j] != 0:
+	while i < len(board) and j >= 0:
+		if board[i][j] == 'Q':
 			return False
 		i += 1
 		j -= 1
-
 	i, j = x, y
-	while i >= 0 and j >= 0 and i < n and j < n:
-		if board[i][j] != 0:
+	while i >= 0 and j >= 0:
+		if board[i][j] == 'Q':
 			return False
 		i -= 1
-		j -= 1	
-
-	i, j = x, y
-	while i >= 0 and j >= 0 and i < n and j < n:
-		if board[i][j] != 0:
-			return False
-		i -= 1
-		j += 1 
+		j -= 1
 	return True
 
-def revertMove(board, x, y):
-	i, j = x, y
-	while i >= 0:
-		while j >= 0:
-			if board[i][j] != 0:
-				board[i][j] = 0
-				return i, j
-			j -= 1
-		i -= 1
-	return i, j
+def solveNQueenUtil(board, N, col):
+	if col == N:
+		printBoard(board, N)
+		return True
+	for i in range(N):
+		if isSafe(board, i, col):
+			board[i][col] = 'Q'
+			solveNQueenUtil(board, N, col + 1)
+			board[i][col] = ' '
+	return False
 
-def printBoard(board):
-	for i in len(board):
-		for j in range(board):
-			print(board, sep = " ")
-		print()
+def solveNQueen(board):
+	N = len(board)
+	if solveNQueenUtil(board, N, 0):
+		print("No Solutions Exist")
 
-if __name__ == "__main__":
-	n = int(input())
-	board = [[0 for i in range(n)] for j in range(n)]
-	NQueen(n, board, 0, 0, False)
+def printBoard(board, N):
+	global solution
+	print()
+	print("SOLUTION {0}".format(solution))
+	solution += 1
+	for i in range(N):
+		for _ in range(N):
+			if _ == N - 1:
+				print("----")
+			else :
+				print('----', end = '')
+		for j in range(N):
+			print('| {0} '.format(board[i][j]), end='')
+		print("|")
+	for _ in range(N):
+		print('----', end = '')
+	print()
+
+def main():
+	N = int(input("Enter the size of Board: "))
+	board = [[' ' for i in range(N)] for i in range(N)]
+	solveNQueen(board)
+
+if __name__ == '__main__':
+	main()

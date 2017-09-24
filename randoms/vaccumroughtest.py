@@ -74,5 +74,5 @@ def main():
 	spiralMove(board, m, n)
 	print(board)
 
-if __name__ == "__main__":
-	main()
+#if __name__ == "__main__":
+main()
